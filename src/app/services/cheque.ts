@@ -4,29 +4,51 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ChequeService {
-  private chequesEmitidos: any[] = [];
+  // Clave secreta para nuestra base de datos temporal en el navegador
+  private dbKey = 'bancoCloud_ChequesDB';
 
-  constructor() { }
+  constructor() {
+    // Si es la primera vez, creamos la tabla de cheques vacía
+    if (!localStorage.getItem(this.dbKey)) {
+      localStorage.setItem(this.dbKey, JSON.stringify([]));
+    }
+  }
+
+  // Función interna para leer la base de datos compartida
+  private leerBaseDeDatos(): any[] {
+    const data = localStorage.getItem(this.dbKey);
+    return data ? JSON.parse(data) : [];
+  }
+
+  // Función interna para guardar los cambios
+  private guardarBaseDeDatos(cheques: any[]) {
+    localStorage.setItem(this.dbKey, JSON.stringify(cheques));
+  }
 
   emitirCheque(cheque: any) {
+    const cheques = this.leerBaseDeDatos();
     cheque.id = Math.floor(Math.random() * 10000);
     cheque.estado = 'EMITIDO';
-    this.chequesEmitidos.push(cheque);
+    
+    cheques.push(cheque);
+    this.guardarBaseDeDatos(cheques);
   }
 
   obtenerMisCheques() {
-    return this.chequesEmitidos;
+    return this.leerBaseDeDatos();
   }
 
-  // Nuevas funciones para el Administrador
   obtenerTodosLosCheques() {
-    return this.chequesEmitidos;
+    return this.leerBaseDeDatos();
   }
 
   cambiarEstado(id: number, nuevoEstado: string) {
-    const cheque = this.chequesEmitidos.find(c => c.id === id);
+    const cheques = this.leerBaseDeDatos();
+    const cheque = cheques.find((c: any) => c.id === id);
+    
     if (cheque) {
       cheque.estado = nuevoEstado;
+      this.guardarBaseDeDatos(cheques);
     }
   }
 }
