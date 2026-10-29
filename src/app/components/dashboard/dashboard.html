@@ -10,9 +10,8 @@
         </div>
         <div class="card-body">
           <p class="text-muted">Opciones de cliente para emitir y consultar estado de cheques propios.</p>
-          <!-- Navegación segura con etiquetas 'a' -->
-          <a routerLink="/emitir-cheque" class="btn btn-outline-primary w-100 mb-2">Emitir nuevo cheque</a>
-          <a routerLink="/consultar-cheques" class="btn btn-outline-secondary w-100">Consultar mis cheques</a>
+          <button type="button" (click)="irAEmitir()" class="btn btn-outline-primary w-100 mb-2">Emitir nuevo cheque</button>
+          <button type="button" (click)="irAConsultar()" class="btn btn-outline-secondary w-100">Consultar mis cheques</button>
         </div>
       </div>
     </div>
@@ -25,9 +24,9 @@
           </div>
           <div class="card-body">
             <p class="text-muted">Gestión total, anulación de cheques y autorización de accesos.</p>
-            <a class="btn btn-danger w-100 mb-2">Listar todos los cheques</a>
-            <a class="btn btn-warning w-100 mb-2">Cambiar estados / Devoluciones</a>
-            <a class="btn btn-dark w-100">Autorizar acceso de clientes</a>
+            <button type="button" class="btn btn-danger w-100 mb-2">Listar todos los cheques</button>
+            <button type="button" class="btn btn-warning w-100 mb-2">Cambiar estados / Devoluciones</button>
+            <button type="button" class="btn btn-dark w-100">Autorizar acceso de clientes</button>
           </div>
         </div>
       </div>

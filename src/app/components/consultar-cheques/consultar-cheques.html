@@ -5,18 +5,15 @@
       <div class="card shadow-sm">
         <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
           <h4 class="mb-0">Mis Cheques Emitidos</h4>
-          <a routerLink="/dashboard" class="btn btn-sm btn-light">Volver al Dashboard</a>
+          <button type="button" (click)="volver()" class="btn btn-sm btn-light">Volver al Dashboard</button>
         </div>
         
         <div class="card-body p-4">
-          
-          <!-- Si no hay cheques, mostramos un mensaje -->
           @if (cheques.length === 0) {
             <div class="alert alert-info text-center">
               Aún no has emitido ningún cheque.
             </div>
           } @else {
-            <!-- Si hay cheques, mostramos la tabla -->
             <div class="table-responsive">
               <table class="table table-bordered table-hover text-center align-middle">
                 <thead class="table-light">
@@ -44,7 +41,6 @@
               </table>
             </div>
           }
-
         </div>
       </div>
 

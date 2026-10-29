@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { ChequeService } from '../../services/cheque'; // Importamos el servicio
+import { Router } from '@angular/router';
+import { ChequeService } from '../../services/cheque';
 
 @Component({
   selector: 'app-consultar-cheques',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './consultar-cheques.html',
   styleUrl: './consultar-cheques.css'
 })
 export class ConsultarChequesComponent implements OnInit {
   cheques: any[] = [];
 
-  constructor(private chequeService: ChequeService) {}
+  constructor(private router: Router, private chequeService: ChequeService) {}
 
   ngOnInit() {
-    // Al cargar la pantalla, recuperamos los cheques guardados
     this.cheques = this.chequeService.obtenerMisCheques();
+  }
+
+  volver() {
+    this.router.navigate(['/dashboard']);
   }
 }

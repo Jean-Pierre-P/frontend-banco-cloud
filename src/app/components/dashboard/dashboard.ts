@@ -1,19 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink], // Agregamos RouterLink
+  imports: [CommonModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
 export class DashboardComponent implements OnInit {
   rolUsuario: string = '';
 
+  constructor(private router: Router) {}
+
   ngOnInit() {
-    // Recuperamos el rol del almacenamiento, por defecto será USER
     this.rolUsuario = localStorage.getItem('userRole') || 'USER';
+  }
+
+  irAEmitir() {
+    this.router.navigate(['/emitir-cheque']);
+  }
+
+  irAConsultar() {
+    this.router.navigate(['/consultar-cheques']);
   }
 }
