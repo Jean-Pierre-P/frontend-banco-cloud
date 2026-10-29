@@ -1,1 +1,59 @@
-<p>emitir-cheque works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Emitir Nuevo Cheque</h4>
+          <button routerLink="/dashboard" class="btn btn-sm btn-light">Volver</button>
+        </div>
+        
+        <div class="card-body p-4">
+          <form (ngSubmit)="registrarCheque()">
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold">Beneficiario</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                name="beneficiario" 
+                [(ngModel)]="beneficiario" 
+                placeholder="Nombre completo o empresa" 
+                required>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Monto ($)</label>
+                <input 
+                  type="number" 
+                  class="form-control" 
+                  name="monto" 
+                  [(ngModel)]="monto" 
+                  placeholder="Ej: 50000" 
+                  min="1"
+                  required>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <label class="form-label fw-bold">Fecha de Emisión</label>
+                <input 
+                  type="date" 
+                  class="form-control" 
+                  name="fecha" 
+                  [(ngModel)]="fechaEmision" 
+                  required>
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success btn-lg">Registrar Emisión</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
