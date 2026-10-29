@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { ChequeService } from '../../services/cheque'; // Importamos el servicio
 
 @Component({
   selector: 'app-consultar-cheques',
@@ -9,7 +10,13 @@ import { RouterLink } from '@angular/router';
   templateUrl: './consultar-cheques.html',
   styleUrl: './consultar-cheques.css'
 })
-export class ConsultarChequesComponent {
-  // Aquí guardaremos la lista de cheques más adelante
+export class ConsultarChequesComponent implements OnInit {
   cheques: any[] = [];
+
+  constructor(private chequeService: ChequeService) {}
+
+  ngOnInit() {
+    // Al cargar la pantalla, recuperamos los cheques guardados
+    this.cheques = this.chequeService.obtenerMisCheques();
+  }
 }

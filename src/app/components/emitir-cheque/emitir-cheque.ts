@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ChequeService } from '../../services/cheque'; // Importamos el servicio
 
 @Component({
   selector: 'app-emitir-cheque',
@@ -15,14 +16,22 @@ export class EmitirChequeComponent {
   monto: number | null = null;
   fechaEmision: string = '';
 
-  constructor(private router: Router) {}
+  // Inyectamos el servicio en el constructor
+  constructor(private router: Router, private chequeService: ChequeService) {}
 
   registrarCheque() {
     if (this.beneficiario && this.monto && this.fechaEmision) {
-      // Aquí más adelante conectaremos con el servicio HTTP para enviar al backend Java.
-      // Por ahora, simulamos el registro exitoso.
-      alert(`Cheque emitido exitosamente a ${this.beneficiario} por $${this.monto}`);
-      this.router.navigate(['/dashboard']);
+      const nuevoCheque = {
+        beneficiario: this.beneficiario,
+        monto: this.monto,
+        fecha: this.fechaEmision
+      };
+      
+      // Guardamos el cheque en el servicio
+      this.chequeService.emitirCheque(nuevoCheque);
+      
+      // Redirigimos a la tabla para verlo
+      this.router.navigate(['/consultar-cheques']);
     } else {
       alert('Por favor, completa todos los campos del cheque.');
     }

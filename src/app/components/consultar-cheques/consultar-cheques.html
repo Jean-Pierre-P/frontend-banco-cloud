@@ -8,8 +8,43 @@
           <button routerLink="/dashboard" class="btn btn-sm btn-light">Volver al Dashboard</button>
         </div>
         
-        <div class="card-body p-4 text-center">
-          <p class="text-muted">Aquí aparecerá la tabla con los cheques una vez que conectemos el servicio temporal.</p>
+        <div class="card-body p-4">
+          
+          <!-- Si no hay cheques, mostramos un mensaje -->
+          @if (cheques.length === 0) {
+            <div class="alert alert-info text-center">
+              Aún no has emitido ningún cheque.
+            </div>
+          } @else {
+            <!-- Si hay cheques, mostramos la tabla -->
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>N° Serie (ID)</th>
+                    <th>Beneficiario</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (cheque of cheques; track cheque.id) {
+                    <tr>
+                      <td class="fw-bold">#{{ cheque.id }}</td>
+                      <td>{{ cheque.beneficiario }}</td>
+                      <td>{{ cheque.fecha }}</td>
+                      <td>${{ cheque.monto }}</td>
+                      <td>
+                        <span class="badge bg-success">{{ cheque.estado }}</span>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+
         </div>
       </div>
 
