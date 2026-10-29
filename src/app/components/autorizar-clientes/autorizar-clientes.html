@@ -1,0 +1,54 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      
+      <div class="card shadow-sm border-dark">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Autorización de Nuevos Clientes</h4>
+          <button type="button" (click)="volver()" class="btn btn-sm btn-light fw-bold">Volver al Dashboard</button>
+        </div>
+        
+        <div class="card-body p-4">
+          <p class="text-muted mb-4">Los siguientes usuarios se han registrado en el portal y requieren autorización manual para operar.</p>
+          
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>RUT</th>
+                  <th>Nombre / Razón Social</th>
+                  <th>Estado</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (user of usuariosPendientes; track user.rut) {
+                  <tr>
+                    <td class="fw-bold">{{ user.rut }}</td>
+                    <td>{{ user.nombre }}</td>
+                    <td>
+                      <span class="badge" 
+                        [ngClass]="{'bg-warning text-dark': user.estado === 'PENDIENTE', 'bg-success': user.estado === 'AUTORIZADO'}">
+                        {{ user.estado }}
+                      </span>
+                    </td>
+                    <td>
+                      <button type="button" 
+                              (click)="autorizarUsuario(user.rut)" 
+                              class="btn btn-sm btn-success" 
+                              [disabled]="user.estado === 'AUTORIZADO'">
+                        {{ user.estado === 'AUTORIZADO' ? 'Acceso Concedido' : 'Autorizar Acceso' }}
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -29,4 +29,8 @@ export class DashboardComponent implements OnInit {
   irAAdminCheques() {
     this.router.navigate(['/admin-cheques']);
   }
+
+  irAAutorizar() {
+    this.router.navigate(['/autorizar-clientes']);
+  }
 }
