@@ -1,1 +1,37 @@
-<p>dashboard works!</p>
+<div class="container mt-5">
+  <h2>Bienvenido a Banco Cloud</h2>
+  <p>Tu rol de acceso es: <span class="badge bg-secondary">{{ rolUsuario }}</span></p>
+
+  <div class="row mt-4">
+    <!-- Panel visible para TODOS (Clientes y Empleados) -->
+    <div class="col-md-6">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Mis Cheques</h5>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Opciones de cliente para emitir y consultar estado de cheques propios.</p>
+          <button routerLink="/emitir-cheque" class="btn btn-outline-primary w-100 mb-2">Emitir nuevo cheque</button>
+          <button class="btn btn-outline-secondary w-100">Consultar mis cheques</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel OCULTO: Solo visible para ADMIN (Empleados) -->
+    @if (rolUsuario === 'ADMIN') {
+      <div class="col-md-6">
+        <div class="card shadow-sm border-danger mb-4">
+          <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Opciones de Administrador</h5>
+          </div>
+          <div class="card-body">
+            <p class="text-muted">Gestión total, anulación de cheques y autorización de accesos.</p>
+            <button class="btn btn-danger w-100 mb-2">Listar todos los cheques</button>
+            <button class="btn btn-warning w-100 mb-2">Cambiar estados / Devoluciones</button>
+            <button class="btn btn-dark w-100">Autorizar acceso de clientes</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
