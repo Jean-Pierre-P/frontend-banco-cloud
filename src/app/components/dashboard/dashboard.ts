@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  imports: [],
   selector: 'app-dashboard',
-  styleUrl: './dashboard.css',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css'
 })
-export class Dashboard {}
+export class DashboardComponent {
+}

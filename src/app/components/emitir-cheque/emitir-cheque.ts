@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  imports: [],
   selector: 'app-emitir-cheque',
-  styleUrl: './emitir-cheque.css',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './emitir-cheque.html',
+  styleUrl: './emitir-cheque.css'
 })
-export class EmitirCheque {}
+export class EmitirChequeComponent {
+}
