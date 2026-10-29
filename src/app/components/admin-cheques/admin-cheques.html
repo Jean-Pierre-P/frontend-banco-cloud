@@ -1,0 +1,66 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      
+      <div class="card shadow-sm border-danger">
+        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Administración General de Cheques</h4>
+          <button type="button" (click)="volver()" class="btn btn-sm btn-light text-danger fw-bold">Volver al Dashboard</button>
+        </div>
+        
+        <div class="card-body p-4">
+          @if (cheques.length === 0) {
+            <div class="alert alert-warning text-center">
+              No hay cheques registrados en el sistema.
+            </div>
+          } @else {
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-light">
+                  <tr>
+                    <th>N° Serie</th>
+                    <th>Beneficiario</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Estado Actual</th>
+                    <th>Acciones de Administrador</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (cheque of cheques; track cheque.id) {
+                    <tr>
+                      <td class="fw-bold">#{{ cheque.id }}</td>
+                      <td>{{ cheque.beneficiario }}</td>
+                      <td>{{ cheque.fecha }}</td>
+                      <td>${{ cheque.monto }}</td>
+                      <td>
+                        <span class="badge" 
+                          [ngClass]="{
+                            'bg-primary': cheque.estado === 'EMITIDO',
+                            'bg-success': cheque.estado === 'COBRADO',
+                            'bg-danger': cheque.estado === 'ANULADO',
+                            'bg-warning text-dark': cheque.estado === 'DEVUELTO'
+                          }">
+                          {{ cheque.estado }}
+                        </span>
+                      </td>
+                      <td>
+                        <!-- Botones de gestión según rúbrica -->
+                        <div class="btn-group btn-group-sm" role="group">
+                          <button type="button" (click)="actualizarEstado(cheque.id, 'COBRADO')" class="btn btn-outline-success" [disabled]="cheque.estado === 'COBRADO'">Cobrar</button>
+                          <button type="button" (click)="actualizarEstado(cheque.id, 'DEVUELTO')" class="btn btn-outline-warning" [disabled]="cheque.estado === 'DEVUELTO'">Devolver</button>
+                          <button type="button" (click)="actualizarEstado(cheque.id, 'ANULADO')" class="btn btn-outline-danger" [disabled]="cheque.estado === 'ANULADO'">Anular</button>
+                        </div>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

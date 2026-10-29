@@ -21,8 +21,8 @@ export class LoginComponent {
       // Simulación: Si el RUT es 'admin', le asignamos el rol ADMIN, de lo contrario USER
       const rol = this.rut.toLowerCase() === 'admin' ? 'ADMIN' : 'USER';
       
-      // Guardamos el rol en el almacenamiento del navegador
-      localStorage.setItem('userRole', rol);
+      // Guardamos el rol en el almacenamiento de esta pestaña específica
+      sessionStorage.setItem('userRole', rol);
       
       this.router.navigate(['/dashboard']);
     } else {

@@ -4,13 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ChequeService {
-  // Lista temporal que simula la base de datos
   private chequesEmitidos: any[] = [];
 
   constructor() { }
 
   emitirCheque(cheque: any) {
-    // Le asignamos un ID aleatorio y el estado inicial "EMITIDO"
     cheque.id = Math.floor(Math.random() * 10000);
     cheque.estado = 'EMITIDO';
     this.chequesEmitidos.push(cheque);
@@ -18,5 +16,17 @@ export class ChequeService {
 
   obtenerMisCheques() {
     return this.chequesEmitidos;
+  }
+
+  // Nuevas funciones para el Administrador
+  obtenerTodosLosCheques() {
+    return this.chequesEmitidos;
+  }
+
+  cambiarEstado(id: number, nuevoEstado: string) {
+    const cheque = this.chequesEmitidos.find(c => c.id === id);
+    if (cheque) {
+      cheque.estado = nuevoEstado;
+    }
   }
 }

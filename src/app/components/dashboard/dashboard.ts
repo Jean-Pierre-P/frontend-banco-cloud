@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.rolUsuario = localStorage.getItem('userRole') || 'USER';
+    this.rolUsuario = sessionStorage.getItem('userRole') || 'USER';
   }
 
   irAEmitir() {
@@ -24,5 +24,9 @@ export class DashboardComponent implements OnInit {
 
   irAConsultar() {
     this.router.navigate(['/consultar-cheques']);
+  }
+
+  irAAdminCheques() {
+    this.router.navigate(['/admin-cheques']);
   }
 }
