@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,14 +10,8 @@ import { Router } from '@angular/router';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class DashboardComponent implements OnInit {
-  rolUsuario: string = '';
-
-  constructor(private router: Router) {}
-
-  ngOnInit() {
-    this.rolUsuario = sessionStorage.getItem('userRole') || 'USER';
-  }
+export class DashboardComponent {
+  constructor(private router: Router, public auth: AuthService) {}
 
   irAEmitir() {
     this.router.navigate(['/emitir-cheque']);
@@ -32,5 +27,9 @@ export class DashboardComponent implements OnInit {
 
   irAAutorizar() {
     this.router.navigate(['/autorizar-clientes']);
+  }
+
+  cerrarSesion() {
+    this.auth.logout();
   }
 }
