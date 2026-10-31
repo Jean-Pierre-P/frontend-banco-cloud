@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ChequeService } from '../../services/cheque';
@@ -13,7 +13,11 @@ import { ChequeService } from '../../services/cheque';
 export class AdminChequesComponent implements OnInit {
   cheques: any[] = [];
 
-  constructor(private router: Router, private chequeService: ChequeService) {}
+  constructor(
+    private router: Router,
+    private chequeService: ChequeService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.cargarCheques();
@@ -21,7 +25,10 @@ export class AdminChequesComponent implements OnInit {
 
   cargarCheques() {
     this.chequeService.obtenerTodosLosCheques().subscribe({
-      next: (data) => (this.cheques = data),
+      next: (data) => {
+        this.cheques = data;
+        this.cdr.detectChanges();
+      },
       error: (err) => console.error('Error al listar los cheques', err)
     });
   }
