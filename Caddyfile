@@ -1,6 +1,6 @@
 {$SITE_ADDRESS} {
     encode gzip
-    handle /api/cheques* {
+    handle /api/* {
         reverse_proxy ms-cheques:8081
     }
     handle {
