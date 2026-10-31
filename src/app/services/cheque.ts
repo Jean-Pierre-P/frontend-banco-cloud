@@ -16,7 +16,7 @@ export interface Cheque {
   providedIn: 'root'
 })
 export class ChequeService {
-  private readonly api = 'http://localhost:8081/api/cheques';
+  private readonly api = '/api/cheques';
 
   constructor(private http: HttpClient) {}
 

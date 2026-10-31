@@ -1,0 +1,11 @@
+{$SITE_ADDRESS} {
+    encode gzip
+    handle /api/cheques* {
+        reverse_proxy ms-cheques:8081
+    }
+    handle {
+        root * /srv
+        try_files {path} /index.html
+        file_server
+    }
+}
