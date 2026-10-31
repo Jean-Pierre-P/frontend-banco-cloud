@@ -20,13 +20,19 @@ export class EmitirChequeComponent {
 
   registrarCheque() {
     if (this.beneficiario && this.monto && this.fechaEmision) {
-      const nuevoCheque = {
-        beneficiario: this.beneficiario,
-        monto: this.monto,
-        fecha: this.fechaEmision
-      };
-      this.chequeService.emitirCheque(nuevoCheque);
-      this.router.navigate(['/consultar-cheques']);
+      this.chequeService
+        .emitirCheque({
+          beneficiario: this.beneficiario,
+          monto: this.monto,
+          fecha: this.fechaEmision
+        })
+        .subscribe({
+          next: () => this.router.navigate(['/consultar-cheques']),
+          error: (err) => {
+            console.error('Error al emitir el cheque', err);
+            alert('No se pudo emitir el cheque (código ' + err.status + ').');
+          }
+        });
     } else {
       alert('Por favor, completa todos los campos del cheque.');
     }

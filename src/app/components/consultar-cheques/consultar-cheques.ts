@@ -16,7 +16,10 @@ export class ConsultarChequesComponent implements OnInit {
   constructor(private router: Router, private chequeService: ChequeService) {}
 
   ngOnInit() {
-    this.cheques = this.chequeService.obtenerMisCheques();
+    this.chequeService.obtenerMisCheques().subscribe({
+      next: (data) => (this.cheques = data),
+      error: (err) => console.error('Error al consultar los cheques', err)
+    });
   }
 
   volver() {

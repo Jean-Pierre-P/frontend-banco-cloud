@@ -1,54 +1,42 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Cheque {
+  id: number;
+  clienteId: string;
+  beneficiario: string;
+  monto: number;
+  fecha: string;
+  estado: string;
+  motivoDevolucion?: string | null;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChequeService {
-  // Clave secreta para nuestra base de datos temporal en el navegador
-  private dbKey = 'bancoCloud_ChequesDB';
+  private readonly api = 'http://localhost:8081/api/cheques';
 
-  constructor() {
-    // Si es la primera vez, creamos la tabla de cheques vacía
-    if (!localStorage.getItem(this.dbKey)) {
-      localStorage.setItem(this.dbKey, JSON.stringify([]));
-    }
+  constructor(private http: HttpClient) {}
+
+  // CONFIRMADO: probado con curl
+  emitirCheque(cheque: { beneficiario: string; monto: number; fecha: string }): Observable<Cheque> {
+    return this.http.post<Cheque>(this.api, cheque);
   }
 
-  // Función interna para leer la base de datos compartida
-  private leerBaseDeDatos(): any[] {
-    const data = localStorage.getItem(this.dbKey);
-    return data ? JSON.parse(data) : [];
+  // CONFIRMADO: probado con curl
+  obtenerMisCheques(): Observable<Cheque[]> {
+    return this.http.get<Cheque[]>(`${this.api}/mios`);
   }
 
-  // Función interna para guardar los cambios
-  private guardarBaseDeDatos(cheques: any[]) {
-    localStorage.setItem(this.dbKey, JSON.stringify(cheques));
+  // SUPUESTO: revisar contra ChequeController (solo ADMIN)
+  obtenerTodosLosCheques(): Observable<Cheque[]> {
+    return this.http.get<Cheque[]>(this.api);
   }
 
-  emitirCheque(cheque: any) {
-    const cheques = this.leerBaseDeDatos();
-    cheque.id = Math.floor(Math.random() * 10000);
-    cheque.estado = 'EMITIDO';
-    
-    cheques.push(cheque);
-    this.guardarBaseDeDatos(cheques);
-  }
-
-  obtenerMisCheques() {
-    return this.leerBaseDeDatos();
-  }
-
-  obtenerTodosLosCheques() {
-    return this.leerBaseDeDatos();
-  }
-
-  cambiarEstado(id: number, nuevoEstado: string) {
-    const cheques = this.leerBaseDeDatos();
-    const cheque = cheques.find((c: any) => c.id === id);
-    
-    if (cheque) {
-      cheque.estado = nuevoEstado;
-      this.guardarBaseDeDatos(cheques);
-    }
+  // SUPUESTO: revisar contra ChequeController (solo ADMIN)
+  cambiarEstado(id: number, nuevoEstado: string): Observable<Cheque> {
+    return this.http.patch<Cheque>(`${this.api}/${id}/estado`, { estado: nuevoEstado });
   }
 }

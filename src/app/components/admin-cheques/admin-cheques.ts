@@ -20,12 +20,20 @@ export class AdminChequesComponent implements OnInit {
   }
 
   cargarCheques() {
-    this.cheques = this.chequeService.obtenerTodosLosCheques();
+    this.chequeService.obtenerTodosLosCheques().subscribe({
+      next: (data) => (this.cheques = data),
+      error: (err) => console.error('Error al listar los cheques', err)
+    });
   }
 
   actualizarEstado(id: number, nuevoEstado: string) {
-    this.chequeService.cambiarEstado(id, nuevoEstado);
-    this.cargarCheques(); // Refresca la vista
+    this.chequeService.cambiarEstado(id, nuevoEstado).subscribe({
+      next: () => this.cargarCheques(), // Refresca la vista
+      error: (err) => {
+        console.error('Error al cambiar el estado', err);
+        alert('No se pudo cambiar el estado (código ' + err.status + ').');
+      }
+    });
   }
 
   volver() {
