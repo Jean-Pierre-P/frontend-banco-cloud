@@ -20,23 +20,28 @@ export class ChequeService {
 
   constructor(private http: HttpClient) {}
 
-  // CONFIRMADO: probado con curl
+  // USER
   emitirCheque(cheque: { beneficiario: string; monto: number; fecha: string }): Observable<Cheque> {
     return this.http.post<Cheque>(this.api, cheque);
   }
 
-  // CONFIRMADO: probado con curl
+  // USER
   obtenerMisCheques(): Observable<Cheque[]> {
     return this.http.get<Cheque[]>(`${this.api}/mios`);
   }
 
-  // SUPUESTO: revisar contra ChequeController (solo ADMIN)
+  // ADMIN
   obtenerTodosLosCheques(): Observable<Cheque[]> {
     return this.http.get<Cheque[]>(this.api);
   }
 
-  // SUPUESTO: revisar contra ChequeController (solo ADMIN)
+  // ADMIN
   cambiarEstado(id: number, nuevoEstado: string): Observable<Cheque> {
     return this.http.patch<Cheque>(`${this.api}/${id}/estado`, { estado: nuevoEstado });
+  }
+
+  // ADMIN
+  registrarDevolucion(id: number, motivo: string): Observable<Cheque> {
+    return this.http.post<Cheque>(`${this.api}/${id}/devolucion`, { motivo });
   }
 }

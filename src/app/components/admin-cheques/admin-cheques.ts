@@ -28,10 +28,24 @@ export class AdminChequesComponent implements OnInit {
 
   actualizarEstado(id: number, nuevoEstado: string) {
     this.chequeService.cambiarEstado(id, nuevoEstado).subscribe({
-      next: () => this.cargarCheques(), // Refresca la vista
+      next: () => this.cargarCheques(),
       error: (err) => {
         console.error('Error al cambiar el estado', err);
         alert('No se pudo cambiar el estado (código ' + err.status + ').');
+      }
+    });
+  }
+
+  devolver(id: number) {
+    const motivo = prompt('Motivo de la devolución:');
+    if (!motivo || !motivo.trim()) {
+      return;
+    }
+    this.chequeService.registrarDevolucion(id, motivo.trim()).subscribe({
+      next: () => this.cargarCheques(),
+      error: (err) => {
+        console.error('Error al registrar la devolución', err);
+        alert('No se pudo registrar la devolución (código ' + err.status + ').');
       }
     });
   }

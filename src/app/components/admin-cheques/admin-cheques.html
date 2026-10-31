@@ -23,6 +23,7 @@
                     <th>Fecha</th>
                     <th>Monto</th>
                     <th>Estado Actual</th>
+                    <th>Motivo de devolución</th>
                     <th>Acciones de Administrador</th>
                   </tr>
                 </thead>
@@ -44,11 +45,12 @@
                           {{ cheque.estado }}
                         </span>
                       </td>
+                      <td>{{ cheque.motivoDevolucion || '-' }}</td>
                       <td>
                         <!-- Botones de gestión según rúbrica -->
                         <div class="btn-group btn-group-sm" role="group">
                           <button type="button" (click)="actualizarEstado(cheque.id, 'COBRADO')" class="btn btn-outline-success" [disabled]="cheque.estado === 'COBRADO'">Cobrar</button>
-                          <button type="button" (click)="actualizarEstado(cheque.id, 'DEVUELTO')" class="btn btn-outline-warning" [disabled]="cheque.estado === 'DEVUELTO'">Devolver</button>
+                          <button type="button" (click)="devolver(cheque.id)" class="btn btn-outline-warning" [disabled]="cheque.estado === 'DEVUELTO'">Devolver</button>
                           <button type="button" (click)="actualizarEstado(cheque.id, 'ANULADO')" class="btn btn-outline-danger" [disabled]="cheque.estado === 'ANULADO'">Anular</button>
                         </div>
                       </td>
