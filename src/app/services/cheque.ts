@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_BASE } from '../auth/auth.config';
 
 export interface Cheque {
   id: number;
@@ -16,31 +17,26 @@ export interface Cheque {
   providedIn: 'root'
 })
 export class ChequeService {
-  private readonly api = '/api/cheques';
+  private readonly api = `${API_BASE}/api/cheques`;
 
   constructor(private http: HttpClient) {}
 
-  // USER
   emitirCheque(cheque: { beneficiario: string; monto: number; fecha: string }): Observable<Cheque> {
     return this.http.post<Cheque>(this.api, cheque);
   }
 
-  // USER
   obtenerMisCheques(): Observable<Cheque[]> {
     return this.http.get<Cheque[]>(`${this.api}/mios`);
   }
 
-  // ADMIN
   obtenerTodosLosCheques(): Observable<Cheque[]> {
     return this.http.get<Cheque[]>(this.api);
   }
 
-  // ADMIN
   cambiarEstado(id: number, nuevoEstado: string): Observable<Cheque> {
     return this.http.patch<Cheque>(`${this.api}/${id}/estado`, { estado: nuevoEstado });
   }
 
-  // ADMIN
   registrarDevolucion(id: number, motivo: string): Observable<Cheque> {
     return this.http.post<Cheque>(`${this.api}/${id}/devolucion`, { motivo });
   }
